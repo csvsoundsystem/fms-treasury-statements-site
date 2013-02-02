@@ -1,8 +1,9 @@
 <html>
     <head>
     </head>
-    <body>
-        <canvas id="canvas" width="1000" height="800"></canvas>
+    <body onload="main()">
+        <div id="marker" style="width: 10px; height: 400px; background-color: red; position: absolute; left: 0;"></div>
+        <canvas id="canvas" width="1000" height="400"></canvas>
         <!-- <audio src="" /> -->
         <script src="data.js"></script>
         <script>
@@ -29,6 +30,9 @@
                 var p = document.getElementById('canvas')
                 var c = p.getContext("2d")
                 line(c, x, y)
+                
+                var marker = document.getElementById('marker')
+                marker.style.left = 23
             }
         </script>
     </body>
