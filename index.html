@@ -1,16 +1,16 @@
 <!doctype html>
 <html>
     <head>
+        <meta name="author" content="CSV Soundsystem">
         <style>
             * {
                 margin: 0;
                 padding: 0;
             }
-            img {
+            #plot {
                 width: 100%;
             }
             audio {
-                position: absolute;
                 right: 0;
                 top: 0;
             }
@@ -19,27 +19,40 @@
                 margin-left: -5px;
                 height: 100%;
                 background-color: #00F;
-                position: absolute;
                 opacity: 0.6;
             }
             #lights {
                 height: 100%;
                 width: 100%;
-                position: absolute;
                 opacity: 0.2;
+            }
+            h1, #csv, #lights, #audio, #marker {
+                position: absolute;
+            }
+            #csv {
+                top: 30px;
+            }
+            h1 {
+                background-color: #222;
+                color: #0F0;
+                font-family: monospace;
             }
         </style>
     </head>
     <body>
         <div id="lights"></div>
         <div id="content">
+            <h1>FMS Symphony</h1>
+            <a rel="author" href="http://csvsoundsystem.com">
+                <img id="csv" src="http://brianabelson.com/img/csvsoundsytem_short.png" alt="csv soundsystem">
+            </a>
             <audio id="audio" controls autoplay style="display: block">
                 <source src="fms_soundsystem.ogg" type="audio/ogg" />
                 <source src="fms_soundsystem.mp3" type="audio/mp3" />
                 <source src="fms_soundsystem.wav" type="audio/wav" />
             </audio>
             <div id="marker"></div>
-            <img src="plot.png" alt="A line plot" />
+            <img id="plot" src="plot.png" alt="A line plot" />
         </div>
         <script>
         audio.addEventListener('timeupdate', function() {
