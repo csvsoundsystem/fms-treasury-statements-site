@@ -25,7 +25,6 @@
                 height: 100%;
                 width: 100%;
                 position: absolute;
-                background-color: yellow;
                 opacity: 0.2;
             }
         </style>
@@ -43,7 +42,10 @@
         </div>
         <script>
         audio.addEventListener('timeupdate', function() {
-            marker.style.left = (100 * audio.currentTime / audio.duration) + '%'
+            var progress = audio.currentTime / audio.duration
+            marker.style.left = (100 * progress) + '%'
+            // 1874 rows
+            lights.style['background-color'] = ['#0F0', '#F00', '#00F', '#F0F'][Math.round((progress * 1874) % 4)]
         }, false)
     </script>
     </body>
