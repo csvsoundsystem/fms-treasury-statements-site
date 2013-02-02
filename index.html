@@ -18,8 +18,8 @@
                 width: 10px;
                 margin-left: -5px;
                 height: 100%;
-                background-color: #00F;
                 opacity: 0.6;
+                background-color: #222;
             }
             #lights {
                 height: 100%;
@@ -49,7 +49,8 @@
     <body>
         <div id="lights"></div>
         <div id="content">
-            <h1><a href="http://www.bdatafest.computationalreporting.com/projects/fms-symphony">FMS Symphony</a></h1>
+            <div id="marker"></div>
+            <h1 id="title"><a href="http://www.bdatafest.computationalreporting.com/projects/fms-symphony">FMS Symphony</a></h1>
             <a rel="author" href="http://csvsoundsystem.com">
                 <img id="csv" src="http://brianabelson.com/img/csvsoundsytem_short.png" alt="csv soundsystem">
             </a>
@@ -58,7 +59,6 @@
                 <source src="fms_soundsystem.mp3" type="audio/mp3" />
                 <source src="fms_soundsystem.wav" type="audio/wav" />
             </audio>
-            <div id="marker"></div>
             <img id="plot" src="plot.png" alt="A line plot" />
         </div>
         <script>
@@ -66,7 +66,9 @@
             var progress = audio.currentTime / audio.duration
             marker.style.left = (100 * progress) + '%'
             // 1874 rows
-            lights.style['background-color'] = ['#0F0', '#FF0', '#0FF', '#F0F'][Math.round((progress * 1874) % 4)]
+            var i = Math.round((progress * 1874) % 4)
+            lights.style['background-color'] = ['#0F0', '#FF0', '#0FF', '#F0F'][i]
+            title.style.color = ['#F0F', '#00F', '#F00', '#0F0'][i]
         }, false)
     </script>
     </body>
