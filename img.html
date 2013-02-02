@@ -21,14 +21,24 @@
                 position: absolute;
                 opacity: 0.3;
             }
+            #lights {
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                background-color: yellow;
+                opacity: 0.2;
+            }
         </style>
     </head>
     <body>
-        <audio id="audio" controls autoplay style="display: block">
-            <source src="AudenMuseedeBeauxArts.ogg" />
-        </audio>
-        <div id="marker"></div>
-        <img src="plot.png" alt="A line plot" />
+        <div id="lights"></div>
+        <div id="content">
+            <audio id="audio" controls autoplay style="display: block">
+                <source src="AudenMuseedeBeauxArts.ogg" />
+            </audio>
+            <div id="marker"></div>
+            <img src="plot.png" alt="A line plot" />
+        </div>
         <script>
         audio.addEventListener('timeupdate', function() {
             marker.style.left = (100 * audio.currentTime / audio.duration) + '%'
