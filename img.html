@@ -1,9 +1,38 @@
 <html>
     <head>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            img {
+                width: 100%;
+            }
+            audio {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            #marker {
+                width: 10px;
+                margin-left: -5px;
+                height: 100%;
+                background-color: red;
+                position: absolute;
+                opacity: 0.3;
+            }
+        </style>
     </head>
     <body>
-        <div id="marker" style="width: 10px; height: 600px; background-color: red; position: absolute; left: 0;"></div>
+        <audio id="audio" controls autoplay style="display: block">
+            <source src="AudenMuseedeBeauxArts.ogg" />
+        </audio>
+        <div id="marker"></div>
         <img src="plot.png" alt="A line plot" />
-        <audio src="">
+        <script>
+        audio.addEventListener('timeupdate', function() {
+            marker.style.left = (100 * audio.currentTime / audio.duration) + '%'
+        }, false)
+    </script>
     </body>
 </html>
