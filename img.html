@@ -17,9 +17,9 @@
                 width: 10px;
                 margin-left: -5px;
                 height: 100%;
-                background-color: red;
+                background-color: #00F;
                 position: absolute;
-                opacity: 0.3;
+                opacity: 0.6;
             }
             #lights {
                 height: 100%;
@@ -45,7 +45,7 @@
             var progress = audio.currentTime / audio.duration
             marker.style.left = (100 * progress) + '%'
             // 1874 rows
-            lights.style['background-color'] = ['#0F0', '#F00', '#00F', '#F0F'][Math.round((progress * 1874) % 4)]
+            lights.style['background-color'] = ['#0F0', '#FF0', '#0FF', '#F0F'][Math.round((progress * 1874) % 4)]
         }, false)
     </script>
     </body>
