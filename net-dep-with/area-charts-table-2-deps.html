@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Area Charts table 2 deposits</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script src="http://code.highcharts.com/stock/highstock.js"></script>
+	<script src='data/t2_area_dep_education_department_programs.js'></script>
+	<script src='data/t2_area_dep_energy_department_programs.js'></script>
+	<script src='data/t2_area_dep_postal_service.js'></script>
+	<script src='data/t2_area_dep_public_debt_cash_issues.js'></script>
+	<script src='data/t2_area_dep_unemployment.js'></script>
+	<script src='data/t2_area_dep_tarp.js'></script>
+	<style>
+		body{
+			font-family: "HelveticaNeue-Light", "Helvetica Neue Light","Helvetica Neue", Helvetica,sans-serif;
+			font-weight: 300;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<input class="chart-selector" type="radio" name="selector" value="0" checked> Public debt cash issuance<br/>
+		<input class="chart-selector" type="radio" name="selector" value="1"> Education department<br/>
+		<input class="chart-selector" type="radio" name="selector" value="2"> Energy department<br/>
+		<input class="chart-selector" type="radio" name="selector" value="3"> Postal service<br/>
+		<input class="chart-selector" type="radio" name="selector" value="4"> Unemployment<br/>
+		<input class="chart-selector" type="radio" name="selector" value="5"> Tarp<br/>
+	</div>
+
+	<div id="container" style="height: 500px"></div>
+
+<script>
+(function() {
+
+	// Convert times to unix time
+	$.each(debt, function(key, value){
+		var u_t = new Date(value[0]).getTime();
+		value[0] = u_t;
+	});
+	$.each(ed, function(key, value){
+		var u_t = new Date(value[0]).getTime();
+		value[0] = u_t;
+	});
+	$.each(energy, function(key, value){
+		var u_t = new Date(value[0]).getTime();
+		value[0] = u_t;
+	});
+	$.each(usps, function(key, value){
+		var u_t = new Date(value[0]).getTime();
+		value[0] = u_t;
+	});
+	$.each(unemployment, function(key, value){
+		var u_t = new Date(value[0]).getTime();
+		value[0] = u_t;
+	});
+	$.each(tarp, function(key, value){
+		var u_t = new Date(value[0]).getTime();
+		value[0] = u_t;
+	});
+
+	var data_channels = [debt, ed, energy, usps, unemployment, tarp];
+
+	function drawChart(data_channel){
+	    var chart = new Highcharts.StockChart({
+			chart : {
+				renderTo : 'container'
+			},
+
+			rangeSelector : {
+				selected : 1
+			},
+
+			title : {
+				text : 'Area chart table 2 deposits'
+			},
+
+			series : [
+			{
+				name : '',
+				data : data_channels[Number(data_channel)],
+				type : 'area',
+				threshold : null,
+				tooltip : {
+					valueDecimals : 2
+				},
+				fillColor : {
+					linearGradient : {
+						x1: 0,
+						y1: 0,
+						x2: 0,
+						y2: 1
+					},
+					stops : [[0, Highcharts.getOptions().colors[0]], [1, 'rgba(0,0,0,0)']]
+				}
+			}]
+		});
+
+	}
+
+	drawChart(0);
+
+	$('.chart-selector').change(function(){
+		var selector = $(this).val();
+		drawChart(selector);
+	});
+
+
+}).call(this);
+
+</script>
+</body>
+</html>
