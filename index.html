@@ -2,11 +2,19 @@
     <head>
     </head>
     <body>
-        <canvas id="canvas" width="1000" height="200"></canvas>
-        <audio src="" />
-        <script src="data.js" />
+        <canvas id="canvas" width="1000" height="600"></canvas>
+        <!-- <audio src="" /> -->
+        <script src="data.js"></script>
         <script>
             var canvas = document.getElementById('canvas').getContext("2d")
+
+            var min = new Date(data[0][0])
+            var max = new Date(data[data.length - 1][0])
+            var range = max - min
+
+            var x = data.map(function(row) { return 1000 * (new Date(row[0]) - min) / range })
+            var cumsum = data.map(function(row) { return row[1] })
+            var y = data.reduce(function(a, b) { return a + b })
             
             // Plot a line.
             var line = function(context, x, y) {
@@ -20,6 +28,7 @@
                 }
                 context.stroke()
             }
+            line(canvas, x, y)
         </script>
     </body>
 </html>
