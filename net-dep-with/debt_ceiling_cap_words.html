@@ -5,8 +5,9 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 	<script src="http://code.highcharts.com/stock/highstock.js"></script>
 	<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
-	<script src='data/data.js'></script>
-	<script src='data/s_and_p.js'></script>
+	<script src='data/ceiling_data.js'></script>
+	<script src='data/capitol_words.js'></script>
+
 
 	<style>
 		body{
@@ -16,39 +17,44 @@
 	</style>
 </head>
 <body>
-	<div>
+<!-- 	<div>
 		<input class="chart-selector" type="radio" name="selector" value="1" checked> Net<br/>
 		<input class="chart-selector" type="radio" name="selector" value="2"> Total deposits<br/>
 		<input class="chart-selector" type="radio" name="selector" value="3"> Total withdrawals<br/>
 	</div>
-
+ -->
 	<div id="container" style="height: 500px"></div>
 
 	<script>
 	(function(){
-		var data_pruned = new Array;
-		var data_col = 1;
+		var data_statutory_debt = [];
+		var data_ceiling = [];
 
 		// Convert times to unix time
-		$.each(data, function(key, value){
+		$.each(ceiling_data, function(key, value){
 			var u_t = new Date(value[0]).getTime();
 			value[0] = u_t;
 		});
-		$.each(s_and_p, function(key, value){
+		$.each(capitol_words, function(key, value){
 			var u_t = new Date(value[0]).getTime();
 			value[0] = u_t;
 		});
 
-		function pruneData(data_col){
-			data_pruned = [];
-			$.each(data, function(key, value){
-				data_pruned.push([value[0],value[data_col]]);
-			})
-		}
+		// Make statutory debt data
+		$.each(ceiling_data, function(key, value){
+			data_statutory_debt.push([value[0],value[1]]);
+		})
+		// Make ceiling data
+		$.each(ceiling_data, function(key, value){
+			data_ceiling.push([value[0],value[2]]);
+		})
+		$.each(capitol_words, function(key, value){
+			capitol_words.push([value[0],value[2]]);
+		})
 
 
 
-		function drawChart(text, color_, fill_color){
+		function drawChart(){
 			// create the chart
 			chart = new Highcharts.StockChart({
 			    chart: {
@@ -59,9 +65,13 @@
 			    rangeSelector: {
 			        selected: 6
 			    },
+
+			    title: {
+			        text: 'Approaching the debt ceiling'
+			    },
 	            yAxis: [{ // Primary yAxis
 	                title: {
-	                    text: 'Capital words',
+	                    text: 'Mentions of "debt ceiling"',
 	                    style: {
 	                        color: '#89A54E'
 	                    }
@@ -71,33 +81,30 @@
 	            }, { // Secondary yAxis
 	                gridLineWidth: 0,
 	                title: {
-	                    text: text,
+	                    text: 'Debt ceiling',
 	                    style: {
-	                        color: color_
+	                        color: '#0cf'
 	                    }
 	                },
 	            }],
-
-			    title: {
-			        text: 'Total Deposits, withdrawals and net transactions, S&P 500 in green'
-			    },
-
-			    series: [{
-	                name: 'S&P',
+			    series: [
+			    {
+	                name: 'Mentions of "debt ceiling"',
 	                yAxis: 0,
 	                type: 'line',
-	                data: s_and_p,
-	                color:'#5CFF9A',
+	                data: capitol_words,
+	                color:'purple',
 					tooltip: {
 						valueDecimals: 2
 					},
-					fillColor:fill_color
+					fillColor:'purple'
 
-	            },{
-			        type: 'column',
-			        name: text,
-			        yAxis:1,
-			        data: data_pruned,
+	            },
+	            {
+			        type: 'line',
+			        name: 'Debt ceiling',
+			        data: data_ceiling,
+			        yAxis: 1,
 			        dataGrouping: {
 						units: [[
 							'week', // unit name
@@ -107,36 +114,36 @@
 							[1, 2, 3, 4, 6]
 						]]
 			        },
-			        color:color_,
-			        fillColor:fill_color
+			        color:'#FF0000',
+			        fillColor:'#0cf'
+			    },{
+			        type: 'line',
+			        name: 'Statutory debt',
+			        yAxis: 1,
+			        data: data_statutory_debt,
+			        dataGrouping: {
+						units: [[
+							'week', // unit name
+							[1]     // allowed multiples
+						], [
+							'month',
+							[1, 2, 3, 4, 6]
+						]]
+			        },
+			        color:'#0cf'
 			    }]
 			});
 
 		}
 
 
-		pruneData(data_col);
-		drawChart('Net', '#B72AEF', '#B72AEF');
+		drawChart();
 
-		$('.chart-selector').change(function(){
-			var selector = $(this).val();
-			pruneData(selector);
-			var text;
-			if (selector == 1){
-				text = 'Net';
-				color = '#B72AEF';
-				fill_color = 'mediumpurple';
-			}else if(selector == 2){
-				text = 'Total Deposits';
-				color = '#DF1111';
-				fill_color = '#980B0B';
-			}else if(selector == 3){
-				text = 'Total withdrawals';
-				color = '#2A99EF';
-				fill_color = '#0B4F98';
-			}
-			drawChart(text, color, fill_color);
-		});
+		// $('.chart-selector').change(function(){
+		// 	var selector = $(this).val();
+		// 	pruneData(selector);
+		// 	drawChart();
+		// });
 
 	}).call(this);
 
