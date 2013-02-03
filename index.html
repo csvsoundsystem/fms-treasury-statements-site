@@ -14,35 +14,53 @@
                 right: 0;
                 top: 0;
             }
-            #title, #csv, #canvas, #audio {
+            #stereo, #csv, #canvas, #audio {
                 position: absolute;
                 right: 0;
             }
             #csv {
                 top: 30px;
             }
-            #title {
-                top: 60px;
+            #stereo {
+                text-align: center;
+                bottom: 0;
+                width: 100%;
                 background-color: #222;
                 color: #FFF;
                 font-family: monospace;
                 font-weight: normal;
-                font-size: 2em;
+            }
+            #stereo * {
+                display: inline;
             }
             a, a:visited, a:hover {
                 color: inherit;
                 text-decoration: inherit;
             }
-            a:hover {
+            a {
                 text-decoration: underline;
+            }
+            h1 {
+                color: inherit;
+                font-size: inherit;
+                font-weight: bold;
+                line-height: inherit;
             }
         </style>
     </head>
     <body>
         <canvas id="canvas" width=1200" height="600"></canvas>
         <div id="content">
-            <h1 style="display: none;">FMS Symphony</h1>
-            <p id="title"><a href="http://www.bdatafest.computationalreporting.com/projects/fms-symphony">?</a></p>
+            
+            <div id="stereo">
+                <h1>FMS Symphony</h1>,
+                by <a rel="author" href="http://csvsoundsystem.com">csv soundsystem</a>.
+                <p>
+                    The left channel is distance to debt ceiling,
+                    and the right channel is interest rate.
+                    (<a href="http://www.bdatafest.computationalreporting.com/projects/fms-symphony">Huh?</a>)
+                </p>
+            </div>
             <a rel="author" href="http://csvsoundsystem.com">
                 <img id="csv" src="http://brianabelson.com/img/csvsoundsytem_short.png" alt="csv soundsystem">
             </a>
@@ -102,10 +120,6 @@
                     }
                     images[i - j] = null
                 }
-
-                // Lights to the beat (1874 rows/beats)
-                var lights = document.getElementById('lights')
-                var title = document.getElementById('title')
             }, false)
         </script>
     </body>
