@@ -58,11 +58,19 @@
             for (var i = n, rowNums = []; i--;) rowNums.push(i);
             rowNums.pop()
             rowNums.reverse()
-            var images = rowNums.map(function(i) {
-                var img = new Image()
-                img.src = 'slideshow/' + i + '.png.jpg'
-                return img
-            })
+          //var images = rowNums.map(function(i) {
+          //    var img = new Image()
+          //    img.src = 'slideshow/' + i + '.png'
+          //    return img
+          //})
+            var images = rowNums.map(function(i) { return(null) })
+
+            // Preload
+            for (var j = 0; j < 100; j ++) {
+                images[i] = new Image()
+                images[i].src = 'slideshow/' + i + '.png'
+            }
+            alert('')
 
             // Swap images
             audio.addEventListener('timeupdate', function() {
@@ -74,9 +82,24 @@
                 var audio = document.getElementById('audio')
                 var progress = audio.currentTime / audio.duration
 
-                // Draw the image
+                // Current image
                 var i = Math.round(1877 * progress)
+
+                // Preload
+                for (var j = 0; j < 20; j ++) {
+                    if (images[i + j] == null) {
+                        images[i + j] = new Image()
+                        images[i + j].src = 'slideshow/' + i + '.png'
+                    }
+                }
+
+                // Draw the image
                 context.drawImage(images[i], 0, 0)
+
+                // Clear
+                for (var j = 1; j < 20; j ++) {
+                    images[i - j] = null
+                }
 
                 // Lights to the beat (1874 rows/beats)
                 var lights = document.getElementById('lights')
