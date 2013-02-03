@@ -66,11 +66,10 @@
             var images = rowNums.map(function(i) { return(null) })
 
             // Preload
-            for (var j = 0; j < 100; j ++) {
+            for (var i = 1; i < 100; i ++) {
                 images[i] = new Image()
-                images[i].src = 'slideshow/' + i + '.png'
+                images[i].src = 'slideshow/' + (i) + '.png'
             }
-            alert('')
 
             // Swap images
             audio.addEventListener('timeupdate', function() {
@@ -89,7 +88,7 @@
                 for (var j = 0; j < 20; j ++) {
                     if (images[i + j] == null) {
                         images[i + j] = new Image()
-                        images[i + j].src = 'slideshow/' + i + '.png'
+                        images[i + j].src = 'slideshow/' + (i + j) + '.png'
                     }
                 }
 
@@ -97,7 +96,10 @@
                 context.drawImage(images[i], 0, 0)
 
                 // Clear
-                for (var j = 1; j < 20 || j < i; j ++) {
+                for (var j = 1; j < 20; j ++) {
+                    if (i - j < 1) {
+                        continue
+                    }
                     images[i - j] = null
                 }
 
