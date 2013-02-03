@@ -14,24 +14,20 @@
                 right: 0;
                 top: 0;
             }
-            #marker {
-                width: 10px;
-                margin-left: -5px;
-                height: 100%;
-                opacity: 0.6;
-                background-color: #222;
-            }
-            h1, #csv, #canvas, #audio, #marker {
+            #title, #csv, #canvas, #audio {
                 position: absolute;
+                right: 0;
             }
             #csv {
                 top: 30px;
             }
-            h1 {
+            #title {
+                top: 60px;
                 background-color: #222;
                 color: #FFF;
                 font-family: monospace;
                 font-weight: normal;
+                font-size: 2em;
             }
             a, a:visited, a:hover {
                 color: inherit;
@@ -45,19 +41,21 @@
     <body>
         <canvas id="canvas" width=1200" height="600"></canvas>
         <div id="content">
-            <h1 id="title"><a href="http://www.bdatafest.computationalreporting.com/projects/fms-symphony">FMS Symphony</a></h1>
+            <h1 style="display: none;">FMS Symphony</h1>
+            <p id="title"><a href="http://www.bdatafest.computationalreporting.com/projects/fms-symphony">?</a></p>
             <a rel="author" href="http://csvsoundsystem.com">
                 <img id="csv" src="http://brianabelson.com/img/csvsoundsytem_short.png" alt="csv soundsystem">
             </a>
             <audio id="audio" controls autoplay style="display: block">
-                <source src="fms_soundsystem.ogg" type="audio/ogg" />
-                <source src="fms_soundsystem.mp3" type="audio/mp3" />
-                <source src="fms_soundsystem.wav" type="audio/wav" />
+                <!-- <source src="fms_soundsystem_melody.ogg" type="audio/ogg" /> -->
+                <source src="fms_soundsystem_melody.mp3" type="audio/mp3" />
+                <!-- <source src="fms_soundsystem_melody.wav" type="audio/wav" /> -->
             </audio>
         </div>
         <script>
         // Download images
         var n = 1877
+        n = 100
         for (var i = n, rowNums = []; i--;) rowNums.push(i);
         rowNums.pop()
         rowNums.reverse()
