@@ -53,36 +53,35 @@
             </audio>
         </div>
         <script>
-        // Download images
-        var n = 1877
-        n = 100
-        for (var i = n, rowNums = []; i--;) rowNums.push(i);
-        rowNums.pop()
-        rowNums.reverse()
-        var images = rowNums.map(function(i) {
-            var img = new Image()
-            img.src = 'slideshow/' + i + '.png'
-            return img
-        })
+            // Download images
+            var n = 1877
+            for (var i = n, rowNums = []; i--;) rowNums.push(i);
+            rowNums.pop()
+            rowNums.reverse()
+            var images = rowNums.map(function(i) {
+                var img = new Image()
+                img.src = 'slideshow/' + i + '.png'
+                return img
+            })
 
-        // Swap images
-        audio.addEventListener('timeupdate', function() {
-            // Canvas
-            var canvas = document.getElementById('canvas')
-            var context = canvas.getContext('2d')
+            // Swap images
+            audio.addEventListener('timeupdate', function() {
+                // Canvas
+                var canvas = document.getElementById('canvas')
+                var context = canvas.getContext('2d')
 
-            // Audio
-            var audio = document.getElementById('audio')
-            var progress = audio.currentTime / audio.duration
+                // Audio
+                var audio = document.getElementById('audio')
+                var progress = audio.currentTime / audio.duration
 
-            // Draw the image
-            var i = Math.round(1877 * progress)
-            context.drawImage(images[i], 0, 0)
+                // Draw the image
+                var i = Math.round(1877 * progress)
+                context.drawImage(images[i], 0, 0)
 
-            // Lights to the beat (1874 rows/beats)
-            var lights = document.getElementById('lights')
-            var title = document.getElementById('title')
-        }, false)
-    </script>
+                // Lights to the beat (1874 rows/beats)
+                var lights = document.getElementById('lights')
+                var title = document.getElementById('title')
+            }, false)
+        </script>
     </body>
 </html>
