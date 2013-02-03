@@ -14,28 +14,20 @@
                 right: 0;
                 top: 0;
             }
-            #marker {
-                width: 10px;
-                margin-left: -5px;
-                height: 100%;
-                opacity: 0.6;
-                background-color: #222;
-            }
-            #lights {
-                height: 100%;
-                width: 100%;
-                opacity: 0.2;
-            }
-            h1, #csv, #lights, #audio, #marker {
+            #title, #csv, #canvas, #audio {
                 position: absolute;
+                right: 0;
             }
             #csv {
                 top: 30px;
             }
-            h1 {
+            #title {
+                top: 60px;
                 background-color: #222;
-                color: #0F0;
+                color: #FFF;
                 font-family: monospace;
+                font-weight: normal;
+                font-size: 2em;
             }
             a, a:visited, a:hover {
                 color: inherit;
@@ -47,35 +39,72 @@
         </style>
     </head>
     <body>
-        <div id="lights"></div>
+        <canvas id="canvas" width=1200" height="600"></canvas>
         <div id="content">
-            <div id="marker"></div>
-            <h1 id="title"><a href="http://www.bdatafest.computationalreporting.com/projects/fms-symphony">FMS Symphony</a></h1>
+            <h1 style="display: none;">FMS Symphony</h1>
+            <p id="title"><a href="http://www.bdatafest.computationalreporting.com/projects/fms-symphony">?</a></p>
             <a rel="author" href="http://csvsoundsystem.com">
                 <img id="csv" src="http://brianabelson.com/img/csvsoundsytem_short.png" alt="csv soundsystem">
             </a>
             <audio id="audio" controls autoplay style="display: block">
-                <source src="fms_soundsystem.ogg" type="audio/ogg" />
-                <source src="fms_soundsystem.mp3" type="audio/mp3" />
-                <source src="fms_soundsystem.wav" type="audio/wav" />
+                <!-- <source src="fms_soundsystem_melody.ogg" type="audio/ogg" /> -->
+                <source src="fms_soundsystem_melody.mp3" type="audio/mp3" />
+                <!-- <source src="fms_soundsystem_melody.wav" type="audio/wav" /> -->
             </audio>
-            <img id="plot" src="plot.png" alt="A line plot" />
         </div>
         <script>
-        audio.addEventListener('timeupdate', function() {
-            var progress = audio.currentTime / audio.duration
+            // Download images
+            var n = 1877
+            for (var i = n, rowNums = []; i--;) rowNums.push(i);
+            rowNums.pop()
+            rowNums.reverse()
+          //var images = rowNums.map(function(i) {
+          //    var img = new Image()
+          //    img.src = 'slideshow/' + i + '.png'
+          //    return img
+          //})
+            var images = rowNums.map(function(i) { return(null) })
 
-            // Move the marker
-            var marker = document.getElementById('marker')
-            marker.style.left = (100 * progress) + '%'
+            // Preload
+            for (var j = 0; j < 100; j ++) {
+                images[i] = new Image()
+                images[i].src = 'slideshow/' + i + '.png'
+            }
+            alert('')
 
-            // Lights to the beat (1874 rows/beats)
-            var i = Math.round((progress * 1874) % 4)
-            var lights = document.getElementById('lights')
-            var title = document.getElementById('title')
-            lights.style['background-color'] = ['#0F0', '#FF0', '#0FF', '#F0F'][i]
-            title.style.color = ['#F0F', '#00F', '#F00', '#0F0'][i]
-        }, false)
-    </script>
+            // Swap images
+            audio.addEventListener('timeupdate', function() {
+                // Canvas
+                var canvas = document.getElementById('canvas')
+                var context = canvas.getContext('2d')
+
+                // Audio
+                var audio = document.getElementById('audio')
+                var progress = audio.currentTime / audio.duration
+
+                // Current image
+                var i = Math.round(1877 * progress)
+
+                // Preload
+                for (var j = 0; j < 20; j ++) {
+                    if (images[i + j] == null) {
+                        images[i + j] = new Image()
+                        images[i + j].src = 'slideshow/' + i + '.png'
+                    }
+                }
+
+                // Draw the image
+                context.drawImage(images[i], 0, 0)
+
+                // Clear
+                for (var j = 1; j < 20; j ++) {
+                    images[i - j] = null
+                }
+
+                // Lights to the beat (1874 rows/beats)
+                var lights = document.getElementById('lights')
+                var title = document.getElementById('title')
+            }, false)
+        </script>
     </body>
 </html>
