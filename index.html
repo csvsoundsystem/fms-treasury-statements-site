@@ -56,6 +56,7 @@
             </audio>
         </div>
         <script>
+        // Download images
         var n = 1877
         for (var i = n, rowNums = []; i--;) rowNums.push(i);
         rowNums.pop()
@@ -66,7 +67,7 @@
             return img
         })
 
-
+        // Swap images
         audio.addEventListener('timeupdate', function() {
             // Canvas
             var canvas = document.getElementById('canvas')
