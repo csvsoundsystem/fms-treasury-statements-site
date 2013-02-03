@@ -64,9 +64,15 @@
         <script>
         audio.addEventListener('timeupdate', function() {
             var progress = audio.currentTime / audio.duration
+
+            // Move the marker
+            var marker = document.getElementById('marker')
             marker.style.left = (100 * progress) + '%'
-            // 1874 rows
+
+            // Lights to the beat (1874 rows/beats)
             var i = Math.round((progress * 1874) % 4)
+            var lights = document.getElementById('lights')
+            var title = document.getElementById('title')
             lights.style['background-color'] = ['#0F0', '#FF0', '#0FF', '#F0F'][i]
             title.style.color = ['#F0F', '#00F', '#F00', '#0F0'][i]
         }, false)
