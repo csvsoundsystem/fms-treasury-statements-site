@@ -97,7 +97,7 @@
                 context.drawImage(images[i], 0, 0)
 
                 // Clear
-                for (var j = 1; j < 20; j ++) {
+                for (var j = 1; j < 20 || j < i; j ++) {
                     images[i - j] = null
                 }
 
